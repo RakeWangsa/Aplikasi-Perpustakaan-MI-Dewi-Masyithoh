@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DaftarSiswa extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'daftar_siswa';
     protected $fillable = ['id','nisn', 'nama', 'kelas'];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarBuku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,5 +34,15 @@ class DaftarController extends Controller
             'active' => 'daftar buku',
             'buku' => $buku,
         ]);
+    }
+
+    public function tambahBuku(Request $request)
+    {
+        DaftarBuku::create([
+            'nama' => $request->nama_buku,
+        ]);
+
+        // Redirect ke route daftarBuku
+        return redirect()->route('daftarBuku');
     }
 }

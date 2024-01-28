@@ -8,19 +8,55 @@
             <h1>Daftar Buku</h1>
          </div>
          <div class="col-auto">
-            @if(isset($buku))
-            <form class="mt-4" method="GET" action="{{ route('managementUserGuruSearch') }}">
+            @if(isset($siswa))
+            <form method="GET" action="{{ route('managementUserGuruSearch') }}">
             @else
-            <form class="mt-4" method="GET" action="{{ route('managementUserSiswaSearch') }}">
+            <form method="GET" action="{{ route('managementUserSiswaSearch') }}">
             @endif
                <div class="input-group">
-                 <label class="col-form-label" style="padding-right: 10px;">Search :</label>
-                 <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
-                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                  <label class="col-form-label" style="padding-right: 10px;">Search :</label>
+                  <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                </div>
             </form>
          </div>
+         <div class="col-auto">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahBuku"><i class="bi bi-plus-circle"></i> Tambah Buku</button>
+
+<!-- Modal -->
+<div class="modal fade" id="tambahBuku" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Buku</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <form method="POST" action="{{ route('tambahBuku') }}" enctype="multipart/form-data">
+            @csrf
+         <div class="modal-body">
+
+               <div class="mb-3">
+                  <label for="nisn" class="form-label">Nama Buku:</label>
+                  <input type="text" class="form-control" id="nama_buku" name="nama_buku">
+               </div>
+
+         </div>
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+         </div>
+      </form>
       </div>
+   </div>
+</div>
+
+
+         </div>
+      </div>
+
+
+ 
+
+
       {{-- @if(isset($buku))
          <div class="d-flex justify-content-start">
             <a class="btn btn-primary mt-4" href="/registerGuru"><i class="bi bi-person-fill-add me-2"></i><span>Register Guru</span></a>

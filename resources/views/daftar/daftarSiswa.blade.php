@@ -9,18 +9,22 @@
          </div>
          <div class="col-auto">
             @if(isset($siswa))
-            <form class="mt-4" method="GET" action="{{ route('managementUserGuruSearch') }}">
+            <form method="GET" action="{{ route('managementUserGuruSearch') }}">
             @else
-            <form class="mt-4" method="GET" action="{{ route('managementUserSiswaSearch') }}">
+            <form method="GET" action="{{ route('managementUserSiswaSearch') }}">
             @endif
                <div class="input-group">
-                 <label class="col-form-label" style="padding-right: 10px;">Search :</label>
-                 <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
-                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                  <label class="col-form-label" style="padding-right: 10px;">Search :</label>
+                  <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                </div>
             </form>
          </div>
+         <div class="col-auto">
+            <button class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Tambah Siswa</button>
+         </div>
       </div>
+      
       {{-- @if(isset($siswa))
          <div class="d-flex justify-content-start">
             <a class="btn btn-primary mt-4" href="/registerGuru"><i class="bi bi-person-fill-add me-2"></i><span>Register Guru</span></a>
