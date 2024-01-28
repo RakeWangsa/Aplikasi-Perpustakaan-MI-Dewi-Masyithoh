@@ -5,10 +5,10 @@
    <div class="container">
       <div class="row align-items-center">
          <div class="col">
-            <h1>Daftar Siswa</h1>
+            <h1>Daftar Buku</h1>
          </div>
          <div class="col-auto">
-            @if(isset($siswa))
+            @if(isset($buku))
             <form class="mt-4" method="GET" action="{{ route('managementUserGuruSearch') }}">
             @else
             <form class="mt-4" method="GET" action="{{ route('managementUserSiswaSearch') }}">
@@ -21,7 +21,7 @@
             </form>
          </div>
       </div>
-      {{-- @if(isset($siswa))
+      {{-- @if(isset($buku))
          <div class="d-flex justify-content-start">
             <a class="btn btn-primary mt-4" href="/registerGuru"><i class="bi bi-person-fill-add me-2"></i><span>Register Guru</span></a>
          </div>
@@ -56,7 +56,7 @@
 
 
 <div class="row">
-   @if(isset($siswa))
+   @if(isset($buku))
       <div class="card col-md-12 mt-2 pb-4">
          <div class="card-body">
              <h5 class="card-title"></h5>
@@ -64,23 +64,19 @@
              <table>
                 <thead>
                    <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">NISN</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Kelas</th>
+                    <th scope="col" style="padding-right:50px">No</th>
+                    <th scope="col" style="padding-right:200px">Nama</th>
                     <th scope="col">Action</th>
                    </tr>
                 </thead>
                 
                 <tbody>
                   @php($no=1)
-                  @if(count($siswa) > 0)
-                  @foreach($siswa as $item)
+                  @if(count($buku) > 0)
+                  @foreach($buku as $item)
                    <tr>
                       <td scope="row">{{ $no++ }}</td>
-                      <td>{{ $item->nisn }}</td>
                       <td>{{ $item->nama }}</td>
-                      <td>{{ $item->kelas }}</td>
                       <td>
                         <a class="btn btn-info" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-book text-white"></i></a>
                         <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
@@ -118,8 +114,8 @@
                
                <tbody>
                  @php($no=1)
-                 @if(count($siswa) > 0)
-                 @foreach($siswa as $item)
+                 @if(count($buku) > 0)
+                 @foreach($buku as $item)
                   <tr>
                      <td scope="row">{{ $no++ }}</td>
                      <td>{{ $item->nomor }}</td>

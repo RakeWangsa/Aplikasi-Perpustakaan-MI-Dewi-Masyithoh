@@ -9,7 +9,7 @@ class DaftarController extends Controller
 {
     public function daftarSiswa()
     {
-        $guru = DB::table('daftar_siswa')
+        $siswa = DB::table('daftar_siswa')
         ->select('*')
         ->orderBy('nisn')
         ->get();
@@ -17,7 +17,21 @@ class DaftarController extends Controller
         return view('daftar.daftarSiswa', [
             'title' => 'Daftar Siswa',
             'active' => 'daftar siswa',
-            'guru' => $guru,
+            'siswa' => $siswa,
+        ]);
+    }
+
+    public function daftarBuku()
+    {
+        $buku = DB::table('daftar_buku')
+        ->select('*')
+        ->orderBy('nama')
+        ->get();
+
+        return view('daftar.daftarBuku', [
+            'title' => 'Daftar Buku',
+            'active' => 'daftar buku',
+            'buku' => $buku,
         ]);
     }
 }
