@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class DaftarBuku extends Model
 {
     use HasFactory;
-    protected $table = 'daftar_buku';
-    protected $fillable = ['id', 'nama'];
+    protected $table = "daftar_buku";
+    public $timestamps = false;
+    protected $fillable = [
+        'nama',
+    ];
 }

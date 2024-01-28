@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DaftarBuku;
+use App\Models\DaftarSiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,5 +45,17 @@ class DaftarController extends Controller
 
         // Redirect ke route daftarBuku
         return redirect()->route('daftarBuku');
+    }
+
+    public function tambahSiswa(Request $request)
+    {
+        DaftarSiswa::create([
+            'nisn' => $request->nisn,
+            'nama' => $request->nama,
+            'kelas' => $request->kelas,
+        ]);
+
+        // Redirect ke route daftarBuku
+        return redirect()->route('daftarSiswa');
     }
 }

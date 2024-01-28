@@ -36,7 +36,7 @@
          <div class="modal-body">
 
                <div class="mb-3">
-                  <label for="nisn" class="form-label">Nama Buku:</label>
+                  <label for="nama_buku" class="form-label">Nama Buku:</label>
                   <input type="text" class="form-control" id="nama_buku" name="nama_buku">
                </div>
 

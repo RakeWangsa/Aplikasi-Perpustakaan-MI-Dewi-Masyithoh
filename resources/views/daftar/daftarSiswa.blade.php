@@ -21,10 +21,43 @@
             </form>
          </div>
          <div class="col-auto">
-            <button class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Tambah Siswa</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahSiswa"><i class="bi bi-person-plus-fill"></i> Tambah Siswa</button>
          </div>
       </div>
       
+      <div class="modal fade" id="tambahSiswa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Siswa</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <form method="POST" action="{{ route('tambahSiswa') }}" enctype="multipart/form-data">
+                  @csrf
+               <div class="modal-body">
+      
+                     <div class="mb-3">
+                        <label for="nisn" class="form-label">NISN:</label>
+                        <input type="text" class="form-control" id="nisn" name="nisn">
+                     </div>
+                     <div class="mb-3">
+                        <label for="nama" class="form-label">Nama:</label>
+                        <input type="text" class="form-control" id="nama" name="nama">
+                     </div>
+                     <div class="mb-3">
+                        <label for="kelas" class="form-label">Kelas:</label>
+                        <input type="text" class="form-control" id="kelas" name="kelas">
+                     </div>
+      
+               </div>
+               <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+            </form>
+            </div>
+         </div>
+      </div>
+
       {{-- @if(isset($siswa))
          <div class="d-flex justify-content-start">
             <a class="btn btn-primary mt-4" href="/registerGuru"><i class="bi bi-person-fill-add me-2"></i><span>Register Guru</span></a>

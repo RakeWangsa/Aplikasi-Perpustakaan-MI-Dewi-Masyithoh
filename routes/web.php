@@ -71,8 +71,9 @@ Route::group(['middleware' => ['auth', 'cekRole:guru']], function() {
 });
 
 Route::group(['middleware' => ['auth', 'cekRole:admin']], function() {
-    Route::get('/daftarSiswa', [DaftarController::class, 'daftarSiswa'])->middleware('auth');
-    Route::get('/daftarBuku', [DaftarController::class, 'daftarBuku'])->middleware('auth');
+    Route::get('/daftarSiswa', [DaftarController::class, 'daftarSiswa'])->name('daftarSiswa')->middleware('auth');
+    Route::get('/daftarBuku', [DaftarController::class, 'daftarBuku'])->name('daftarBuku')->middleware('auth');
+    Route::post('/tambahSiswa', [DaftarController::class, 'tambahSiswa'])->name('tambahSiswa')->middleware('auth');
     Route::post('/tambahBuku', [DaftarController::class, 'tambahBuku'])->name('tambahBuku')->middleware('auth');
 
 
