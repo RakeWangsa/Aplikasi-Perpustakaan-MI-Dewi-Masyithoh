@@ -12,10 +12,10 @@
                   <li><a class="dropdown-item" href="/managementUser/siswa">Siswa</a></li>
                   </ul>
                </div> --}}
-               <a class="nav-link collapsed {{ ($active === "daftar siswa") ? 'active' : '' }}" href="/daftarSiswa"> <i class="bi bi-pencil-square"></i><span>Daftar Siswa</span> </a>
+               <a class="nav-link collapsed {{ ($active === "daftar siswa") ? 'active' : '' }}" href="/daftarSiswa"> <i class="bi bi-people"></i><span>Daftar Siswa</span> </a>
                <a class="nav-link collapsed {{ ($active === "daftar buku") ? 'active' : '' }}" href="/daftarBuku"> <i class="bi bi-clipboard2"></i><span>Daftar Buku</span> </a>              
-               <a class="nav-link collapsed {{ ($active === "agenda kelas") ? 'active' : '' }}" href="/agendaKelas"> <i class="bi bi-pencil-square"></i><span>Agenda Kelas</span> </a>
-               <a class="nav-link collapsed {{ ($active === "absensi guru") ? 'active' : '' }}" href="/absensiGuru"> <i class="bi bi-clipboard2"></i><span>Absensi Guru</span> </a>
+               {{-- <a class="nav-link collapsed {{ ($active === "agenda kelas") ? 'active' : '' }}" href="/agendaKelas"> <i class="bi bi-pencil-square"></i><span>Agenda Kelas</span> </a>
+               <a class="nav-link collapsed {{ ($active === "absensi guru") ? 'active' : '' }}" href="/absensiGuru"> <i class="bi bi-clipboard2"></i><span>Absensi Guru</span> </a> --}}
             @elseif (auth()->user()->role=="siswa")
                <a class="nav-link collapsed {{ ($active === "home") ? 'active' : '' }}" href="/home"> <i class="bi bi-grid"></i><span>Home</span> </a>
                <a class="nav-link collapsed {{ ($active === "daftar kelas") ? 'active' : '' }}" href="/daftarKelasSiswa"> <i class="bi bi-list-ul"></i><span>Daftar Kelas</span> </a>

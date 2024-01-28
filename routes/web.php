@@ -31,7 +31,6 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 
-Route::get('/daftarBuku', [DaftarController::class, 'daftarBuku'])->middleware('guest');
 
 
 
@@ -72,6 +71,10 @@ Route::group(['middleware' => ['auth', 'cekRole:guru']], function() {
 });
 
 Route::group(['middleware' => ['auth', 'cekRole:admin']], function() {
+    Route::get('/daftarSiswa', [DaftarController::class, 'daftarSiswa'])->middleware('auth');
+    Route::get('/daftarBuku', [DaftarController::class, 'daftarBuku'])->middleware('auth');
+
+
     Route::get('/managementUser/guru', [ManagementController::class, 'managementUserGuru'])->name('managementUserGuru')->middleware('auth');
     Route::get('/managementUser/siswa', [ManagementController::class, 'managementUserSiswa'])->name('managementUserSiswa')->middleware('auth');
     Route::get('/managementUser/guru/search', [ManagementController::class, 'managementUserGuruSearch'])->name('managementUserGuruSearch')->middleware('auth');
