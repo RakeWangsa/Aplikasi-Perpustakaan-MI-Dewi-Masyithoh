@@ -65,4 +65,24 @@ class DaftarController extends Controller
         DaftarSiswa::where('id', $id)->delete();
         return redirect('/daftarSiswa')->with('success', 'Data siswa berhasil dihapus!');
     }
+
+    public function editSiswa(Request $request, $id)
+    {
+        $id = base64_decode($id);
+        // $validatedData = $request->validate([
+        //     'nama' => 'required|max:255',
+        //     'email' => 'required|email:dns|unique:users,email,'.$id,
+        //     'nomor' => 'required|unique:users,nomor,'.$id,
+        //     'password' => 'nullable|min:5|max:255'
+        // ]);
+
+        $siswa = DaftarSiswa::findOrFail($id);
+
+        $siswa->nama = $request->nama;
+        $siswa->kelas = $request->kelas;
+
+        $siswa->save();
+        return redirect('/daftarSiswa')->with('success', 'Data siswa berhasil diupdate!');
+        
+    }
 }

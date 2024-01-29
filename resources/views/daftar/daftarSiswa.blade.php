@@ -119,9 +119,47 @@
                       <td>{{ $item->kelas }}</td>
                       <td>
                         <a class="btn btn-info" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-book text-white"></i></a>
-                        <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a class="btn btn-warning" style="border-radius: 100px;" data-bs-toggle="modal" data-bs-target="#editSiswa{{ $item->id }}"><i class="bi bi-pencil-square text-white"></i></a>
                         <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusSiswa', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
                      </td>
+
+
+ 
+ <!-- Modal -->
+ <div class="modal fade" id="editSiswa{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Siswa</h1>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <form method="POST" action="{{ route('editSiswa', ['id' => base64_encode($item->id)]) }}" enctype="multipart/form-data">
+         @csrf
+      <div class="modal-body">
+
+            <div class="mb-3">
+               <label for="nisn" class="form-label">NISN:</label>
+               <input type="text" class="form-control" id="nisn" name="nisn" value="{{ $item->nisn }}" readonly>
+            </div>
+            <div class="mb-3">
+               <label for="nama" class="form-label">Nama:</label>
+               <input type="text" class="form-control" id="nama" name="nama" value="{{ $item->nama }}" required>
+            </div>
+            <div class="mb-3">
+               <label for="kelas" class="form-label">Kelas:</label>
+               <input type="text" class="form-control" id="kelas" name="kelas" value="{{ $item->kelas }}" required>
+            </div>
+
+      </div>
+      <div class="modal-footer">
+         <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+   </form>
+     </div>
+   </div>
+ </div>
+
+
                    </tr>
                    @endforeach
                    @else
