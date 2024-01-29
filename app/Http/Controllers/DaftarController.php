@@ -101,6 +101,38 @@ class DaftarController extends Controller
         ]);
     }
 
+    public function daftarBukuSearch(Request $request)
+    {
+        $search=$request->search;
+        $buku = DB::table('daftar_buku')
+        ->where('nama', 'like', '%' . $request->search . '%')
+        ->select('*')
+        ->orderBy('nama')
+        ->get();
+        $nomorBuku = DB::table('nomor_buku')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
+        $peminjaman = DB::table('peminjaman')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
+        $siswa = DB::table('daftar_siswa')
+        ->select('*')
+        ->orderBy('nisn')
+        ->get();
+
+        return view('daftar.daftarBuku', [
+            'title' => 'Daftar Buku',
+            'active' => 'daftar buku',
+            'buku' => $buku,
+            'nomorBuku' => $nomorBuku,
+            'peminjaman' => $peminjaman,
+            'siswa' => $siswa,
+            'search' => $search
+        ]);
+    }
+
     public function tambahBuku(Request $request)
     {
         DaftarBuku::create([

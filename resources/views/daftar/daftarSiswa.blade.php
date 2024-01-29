@@ -132,7 +132,7 @@
                            <div class="modal-body">
                               <div class="row mb-4">
                                  <div class="col-6">
-                                    <p><strong>Jumlah Pinjaman: {{ $peminjaman->where('nisn', $item->nisn)->count() }}</strong></p>
+                                    <p><strong>Jumlah Pinjaman: {{ $peminjaman->where('nisn', '===', $item->nisn)->count() }}</strong></p>
                                  </div>
                                  <div class="col-2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahPinjaman{{ $item->id }}">
@@ -155,7 +155,7 @@
                                           <div class="col" style="margin-right:-25px">
                                              <li class="list-group-item"><strong>Nomor Buku</strong></li>
                                              @foreach($peminjaman as $data)
-                                          @if($data->nisn==$item->nisn)
+                                          @if($data->nisn===$item->nisn)
                                              <li class="list-group-item">{{ $data->nomor_buku }}</li>
                                           @endif
                                           @endforeach
@@ -164,8 +164,8 @@
                                           <div class="col" style="margin-left:-25px">
                                              <li class="list-group-item"><strong>Nama Buku</strong></li>
                                              @foreach($peminjaman as $data)
-                                             @if($data->nisn == $item->nisn)
-                                                @php($idBukuData = $nomorBuku->where('nomor_buku', $data->nomor_buku)->first())
+                                             @if($data->nisn === $item->nisn)
+                                                @php($idBukuData = $nomorBuku->where('nomor_buku','===', $data->nomor_buku)->first())
                                                 @php($namaBukuData = $buku->where('id', $idBukuData->id_buku)->first())
                                                 <li class="list-group-item">{{ $namaBukuData ? $namaBukuData->nama : 'Not Found' }}</li>
                                              @endif

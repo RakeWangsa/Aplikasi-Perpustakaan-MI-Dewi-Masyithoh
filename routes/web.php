@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth', 'cekRole:admin']], function() {
     Route::post('/tambahPinjaman', [DaftarController::class, 'tambahPinjaman'])->name('tambahPinjaman')->middleware('auth');
     Route::post('/pengembalian', [DaftarController::class, 'pengembalian'])->name('pengembalian')->middleware('auth');
     Route::post('/daftarSiswa/search', [DaftarController::class, 'daftarSiswaSearch'])->name('daftarSiswaSearch')->middleware('auth');
+    Route::post('/daftarBuku/search', [DaftarController::class, 'daftarBukuSearch'])->name('daftarBukuSearch')->middleware('auth');
 
 
     Route::get('/managementUser/guru', [ManagementController::class, 'managementUserGuru'])->name('managementUserGuru')->middleware('auth');

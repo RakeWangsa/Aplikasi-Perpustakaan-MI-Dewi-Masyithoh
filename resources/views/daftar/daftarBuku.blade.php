@@ -8,14 +8,11 @@
             <h1>Daftar Buku</h1>
          </div>
          <div class="col-auto">
-            @if(isset($siswa))
-            <form method="GET" action="{{ route('managementUserGuruSearch') }}">
-            @else
-            <form method="GET" action="{{ route('managementUserSiswaSearch') }}">
-            @endif
+            <form method="POST" action="{{ route('daftarBukuSearch') }}">
+               @csrf
                <div class="input-group">
                   <label class="col-form-label" style="padding-right: 10px;">Search :</label>
-                  <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
+                  <input name="search" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
                   <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                </div>
             </form>
@@ -158,10 +155,10 @@
                                              <li class="list-group-item"><strong>Peminjam</strong></li>
                                              @foreach($nomorBuku as $data)
                                              @if($data->id_buku == $item->id)
-                                                @php($idBukuData = $peminjaman->where('nomor_buku', $data->nomor_buku)->first())
+                                                @php($idBukuData = $peminjaman->where('nomor_buku','===', $data->nomor_buku)->first())
                                                 
                                                 @if($idBukuData)
-                                                @php($namaSiswa = $siswa->where('nisn', $idBukuData->nisn)->first())
+                                                @php($namaSiswa = $siswa->where('nisn','===', $idBukuData->nisn)->first())
 
                                                    @if($namaSiswa)
                                                       <li class="list-group-item">{{ $namaSiswa->nama }}</li>
