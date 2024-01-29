@@ -142,11 +142,45 @@
                      
                                  <div class="mb-3">
                                     <ul class="list-group">
-                                       @foreach($nomorBuku as $data)
-                                          @if($data->id_buku==$item->id)
-                                             <li class="list-group-item">{{ $data->nomor_buku }}</li>
-                                          @endif
-                                       @endforeach
+                                       <div class="row">
+
+
+                                          <div class="col" style="margin-right:-25px">
+                                             <li class="list-group-item"><strong>Nomor Buku</strong></li>
+                                             @foreach($nomorBuku as $data)
+                                             @if($data->id_buku==$item->id)
+                                                <li class="list-group-item">{{ $data->nomor_buku }}</li>
+                                             @endif
+                                          @endforeach
+                                          </div>
+
+                                          <div class="col" style="margin-left:-25px">
+                                             <li class="list-group-item"><strong>Peminjam</strong></li>
+                                             @foreach($nomorBuku as $data)
+                                             @if($data->id_buku == $item->id)
+                                                @php($idBukuData = $peminjaman->where('nomor_buku', $data->nomor_buku)->first())
+                                                
+                                                @if($idBukuData)
+                                                @php($namaSiswa = $siswa->where('nisn', $idBukuData->nisn)->first())
+
+                                                   @if($namaSiswa)
+                                                      <li class="list-group-item">{{ $namaSiswa->nama }}</li>
+                                                   @else
+                                                      <li class="list-group-item">-</li>
+                                                   @endif
+                                                @else
+                                                   <li class="list-group-item">-</li>
+                                                @endif
+                                             @endif
+                                          @endforeach
+                                          
+                                          
+                                          </div>
+
+                                    </div>
+
+                                       
+
                                      </ul>
                                  </div>
                      

@@ -39,6 +39,39 @@ class DaftarController extends Controller
         ]);
     }
 
+    public function daftarSiswaSearch(Request $request)
+    {
+        $search=$request->search;
+        $siswa = DB::table('daftar_siswa')
+        ->where(function ($query) use ($request) {
+            $query->where('nama', 'like', '%' . $request->search . '%')
+                  ->orWhere('nisn', 'like', '%' . $request->search . '%');
+        })
+        ->select('*')
+        ->orderBy('nisn')
+        ->get();
+        $peminjaman = DB::table('peminjaman')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
+        $nomorBuku = DB::table('nomor_buku')
+        ->select('*')
+        ->get();
+        $buku = DB::table('daftar_buku')
+        ->select('*')
+        ->get();
+
+        return view('daftar.daftarSiswa', [
+            'title' => 'Daftar Siswa',
+            'active' => 'daftar siswa',
+            'siswa' => $siswa,
+            'peminjaman' => $peminjaman,
+            'nomorBuku' => $nomorBuku,
+            'buku' => $buku,
+            'search' => $search
+        ]);
+    }
+
     public function daftarBuku()
     {
         $buku = DB::table('daftar_buku')
@@ -49,12 +82,22 @@ class DaftarController extends Controller
         ->select('*')
         ->orderBy('nomor_buku')
         ->get();
+        $peminjaman = DB::table('peminjaman')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
+        $siswa = DB::table('daftar_siswa')
+        ->select('*')
+        ->orderBy('nisn')
+        ->get();
 
         return view('daftar.daftarBuku', [
             'title' => 'Daftar Buku',
             'active' => 'daftar buku',
             'buku' => $buku,
-            'nomorBuku' => $nomorBuku
+            'nomorBuku' => $nomorBuku,
+            'peminjaman' => $peminjaman,
+            'siswa' => $siswa,
         ]);
     }
 
@@ -139,5 +182,10 @@ class DaftarController extends Controller
 
         // Redirect ke route daftarBuku
         return redirect()->route('daftarSiswa');
+    }
+    public function pengembalian(Request $request)
+    {
+        Peminjaman::where('nomor_buku', $request->nomor_buku)->delete();
+        return redirect('/daftarSiswa')->with('success', 'Buku berhasil dikembalikan!');
     }
 }

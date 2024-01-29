@@ -8,14 +8,11 @@
             <h1>Daftar Siswa</h1>
          </div>
          <div class="col-auto">
-            @if(isset($siswa))
-            <form method="GET" action="{{ route('managementUserGuruSearch') }}">
-            @else
-            <form method="GET" action="{{ route('managementUserSiswaSearch') }}">
-            @endif
+            <form method="POST" action="{{ route('daftarSiswaSearch') }}">
+               @csrf
                <div class="input-group">
                   <label class="col-form-label" style="padding-right: 10px;">Search :</label>
-                  <input name="nama" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
+                  <input name="search" type="text" class="form-control" @if(isset($search)) value="{{ $search }}" @endif>
                   <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                </div>
             </form>
@@ -134,12 +131,17 @@
 
                            <div class="modal-body">
                               <div class="row mb-4">
-                                 <div class="col">
+                                 <div class="col-6">
                                     <p><strong>Jumlah Pinjaman: {{ $peminjaman->where('nisn', $item->nisn)->count() }}</strong></p>
                                  </div>
-                                 <div class="col">
-                                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#tambahPinjaman{{ $item->id }}">
-                                       <i class="bi bi-plus-circle text-white"></i> Tambah
+                                 <div class="col-2">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahPinjaman{{ $item->id }}">
+                                       Pinjam
+                                     </button>
+                                 </div>
+                                 <div class="col-4">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pengembalian{{ $item->id }}">
+                                       Pengembalian
                                      </button>
                                  </div>
                               </div>
@@ -196,7 +198,7 @@
 
          <div class="mb-3" style="display:none">
             <label for="nisn" class="form-label">NISN:</label>
-            <input type="text" class="form-control" id="nisn" name="nisn" value="{{ $item->id }}" readonly>
+            <input type="text" class="form-control" id="nisn" name="nisn" value="{{ $item->nisn }}" readonly>
          </div>
             <div class="mb-3">
                <label for="nomor_buku" class="form-label">Nomor Buku:</label>
@@ -211,6 +213,37 @@
      </div>
    </div>
  </div>
+
+                        <!-- Modal Pengembalian -->
+                        <div class="modal fade" id="pengembalian{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                           <div class="modal-dialog">
+                             <div class="modal-content">
+                               <div class="modal-header">
+                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Pengembalian "{{ $item->nama }}"</h1>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+                               <form method="POST" action="{{ route('pengembalian', ['id' => base64_encode($item->id)]) }}" enctype="multipart/form-data">
+                                 @csrf
+                              <div class="modal-body">
+                        
+                                 <div class="mb-3" style="display:none">
+                                    <label for="nisn" class="form-label">NISN:</label>
+                                    <input type="text" class="form-control" id="nisn" name="nisn" value="{{ $item->nisn }}" readonly>
+                                 </div>
+                                    <div class="mb-3">
+                                       <label for="nomor_buku" class="form-label">Nomor Buku:</label>
+                                       <input type="text" class="form-control" id="nomor_buku" name="nomor_buku" required>
+                                    </div>
+                        
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                           </form>
+                             </div>
+                           </div>
+                         </div>
+
 
  <!-- Modal Edit Siswa -->
  <div class="modal fade" id="editSiswa{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
