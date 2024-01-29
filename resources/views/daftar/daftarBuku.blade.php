@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
 @section('container')
+
+@if(session('existingNomorBuku'))
+    <script>
+        alert('Buku dengan nomor {{ session('nomor') }} sudah tersedia');
+    </script>
+@endif
+
 <div class="pagetitle mt-3">
    <div class="container">
       <div class="row align-items-center">

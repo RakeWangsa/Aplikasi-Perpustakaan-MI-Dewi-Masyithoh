@@ -145,6 +145,12 @@ class DaftarController extends Controller
 
     public function tambahSiswa(Request $request)
     {
+        $existingNISN = DaftarSiswa::where('nisn', $request->nisn)->first();
+        if ($existingNISN) {
+            return redirect()->route('daftarSiswa')
+            ->with('existingNISN', true)
+            ->with('nisn', $request->nisn);
+        }
         DaftarSiswa::create([
             'nisn' => $request->nisn,
             'nama' => $request->nama,
@@ -184,15 +190,24 @@ class DaftarController extends Controller
     public function hapusBuku($id)
     {
         $id = base64_decode($id);
-        $dataBuku = DB::table('daftar_buku')
-        ->where('id',$id)
-        ->select('*')
-        ->first();
+    
+        // Ambil semua nomor_buku dari $dataBuku
+        $dataBuku = DB::table('nomor_buku')
+            ->where('id_buku', $id)
+            ->pluck('nomor_buku')
+            ->toArray();
+    
+        // Hapus data dari model Peminjaman yang memiliki nomor_buku yang sama
+        Peminjaman::whereIn('nomor_buku', $dataBuku)->delete();
+    
+        // Hapus data dari model DaftarBuku dan NomorBuku
         DaftarBuku::where('id', $id)->delete();
-        Peminjaman::where('nomor_buku', $dataBuku->nomor_buku)->delete();
-        NomorBuku::where('nomor_buku', $dataBuku->nomor_buku)->delete();
+        NomorBuku::where('id_buku', $id)->delete();
+    
         return redirect('/daftarBuku')->with('success', 'Data buku berhasil dihapus!');
     }
+    
+    
 
     public function editBuku(Request $request, $id)
     {
@@ -208,6 +223,13 @@ class DaftarController extends Controller
 
     public function tambahJumlahBuku(Request $request)
     {
+        $existingNomorBuku = NomorBuku::where('nomor_buku', $request->nomor_buku)->first();
+        if ($existingNomorBuku) {
+            return redirect()->route('daftarBuku')
+            ->with('existingNomorBuku', true)
+            ->with('nomor', $request->nomor_buku);
+        }
+
         NomorBuku::create([
             'id_buku' => $request->id_buku,
             'nomor_buku' => $request->nomor_buku,

@@ -20,7 +20,11 @@
     </script>
 @endif
 
-
+@if(session('existingNISN'))
+    <script>
+        alert('NISN {{ session('nisn') }} sudah terdaftar');
+    </script>
+@endif
 
 <div class="pagetitle mt-3">
    <div class="container">
@@ -56,15 +60,15 @@
       
                      <div class="mb-3">
                         <label for="nisn" class="form-label">NISN:</label>
-                        <input type="text" class="form-control" id="nisn" name="nisn">
+                        <input type="text" class="form-control" id="nisn" name="nisn" required>
                      </div>
                      <div class="mb-3">
                         <label for="nama" class="form-label">Nama:</label>
-                        <input type="text" class="form-control" id="nama" name="nama">
+                        <input type="text" class="form-control" id="nama" name="nama" required>
                      </div>
                      <div class="mb-3">
                         <label for="kelas" class="form-label">Kelas:</label>
-                        <input type="text" class="form-control" id="kelas" name="kelas">
+                        <input type="text" class="form-control" id="kelas" name="kelas" required>
                      </div>
       
                </div>
