@@ -158,7 +158,13 @@ class DaftarController extends Controller
     public function hapusSiswa($id)
     {
         $id = base64_decode($id);
+        $dataSiswa = DB::table('daftar_siswa')
+        ->where('id',$id)
+        ->select('*')
+        ->first();
+
         DaftarSiswa::where('id', $id)->delete();
+        Peminjaman::where('nisn', $dataSiswa->nisn)->delete();
         return redirect('/daftarSiswa')->with('success', 'Data siswa berhasil dihapus!');
     }
 
@@ -178,7 +184,13 @@ class DaftarController extends Controller
     public function hapusBuku($id)
     {
         $id = base64_decode($id);
+        $dataBuku = DB::table('daftar_buku')
+        ->where('id',$id)
+        ->select('*')
+        ->first();
         DaftarBuku::where('id', $id)->delete();
+        Peminjaman::where('nomor_buku', $dataBuku->nomor_buku)->delete();
+        NomorBuku::where('nomor_buku', $dataBuku->nomor_buku)->delete();
         return redirect('/daftarBuku')->with('success', 'Data buku berhasil dihapus!');
     }
 
