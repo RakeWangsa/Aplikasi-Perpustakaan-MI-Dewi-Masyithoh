@@ -37,7 +37,7 @@
 
                <div class="mb-3">
                   <label for="nama_buku" class="form-label">Nama Buku:</label>
-                  <input type="text" class="form-control" id="nama_buku" name="nama_buku">
+                  <input type="text" class="form-control" id="nama_buku" name="nama_buku" required>
                </div>
 
          </div>
@@ -113,12 +113,85 @@
                       <td scope="row">{{ $no++ }}</td>
                       <td>{{ $item->nama }}</td>
                       <td>
-                        <a class="btn btn-info" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-book text-white"></i></a>
+                        <a class="btn btn-info" style="border-radius: 100px;" data-bs-toggle="modal" data-bs-target="#dataBuku{{ $item->id }}"><i class="bi bi-list-task text-white"></i></a>
                         <a class="btn btn-warning" style="border-radius: 100px;" data-bs-toggle="modal" data-bs-target="#editBuku{{ $item->id }}"><i class="bi bi-pencil-square text-white"></i></a>
                         <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusBuku', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
                      </td>
 
-                      <!-- Modal -->
+                      <!-- Modal Data -->
+                      <div class="modal fade" id="dataBuku{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Daftar Buku "{{ $item->nama }}"</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                           <div class="modal-body">
+                              <div class="row mb-4">
+                                 <div class="col">
+                                    <p><strong>Jumlah Buku: {{ $nomorBuku->where('id_buku', $item->id)->count() }}</strong></p>
+                                 </div>
+                                 <div class="col">
+                                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#tambahJumlah">
+                                       <i class="bi bi-plus-circle text-white"></i> Tambah
+                                     </button>
+                                 </div>
+                              </div>
+                              
+                     
+                                 <div class="mb-3">
+                                    <ul class="list-group">
+                                       @foreach($nomorBuku as $data)
+                                          @if($data->id_buku==$item->id)
+                                             <li class="list-group-item">{{ $data->nomor_buku }}</li>
+                                          @endif
+                                       @endforeach
+                                     </ul>
+                                 </div>
+                     
+                           </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+ 
+ <!-- Modal Tambah Jumlah Buku -->
+ <div class="modal fade" id="tambahJumlah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Jumlah Buku</h1>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <form method="POST" action="{{ route('tambahJumlahBuku') }}" enctype="multipart/form-data">
+         @csrf
+      <div class="modal-body">
+
+            <div class="mb-3">
+               <label for="nama_buku" class="form-label">Nama Buku:</label>
+               <input type="text" class="form-control" value="{{ $item->nama }}" readonly>
+            </div>
+            <div class="mb-3">
+               <label for="nomor_buku" class="form-label">Nama Buku:</label>
+               <input type="text" class="form-control" id="nomor_buku" required>
+            </div>
+
+      </div>
+      <div class="modal-footer">
+         <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+   </form>
+     </div>
+   </div>
+ </div>
+
+
+                     
+                      <!-- Modal Edit -->
  <div class="modal fade" id="editBuku{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
      <div class="modal-content">
@@ -131,7 +204,7 @@
       <div class="modal-body">
 
             <div class="mb-3">
-               <label for="nama" class="form-label">Nama:</label>
+               <label for="nama" class="form-label">Nama Buku:</label>
                <input type="text" class="form-control" id="nama" name="nama" value="{{ $item->nama }}" required>
             </div>
 

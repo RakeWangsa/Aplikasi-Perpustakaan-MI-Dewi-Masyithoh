@@ -29,11 +29,16 @@ class DaftarController extends Controller
         ->select('*')
         ->orderBy('nama')
         ->get();
+        $nomorBuku = DB::table('nomor_buku')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
 
         return view('daftar.daftarBuku', [
             'title' => 'Daftar Buku',
             'active' => 'daftar buku',
             'buku' => $buku,
+            'nomorBuku' => $nomorBuku
         ]);
     }
 
