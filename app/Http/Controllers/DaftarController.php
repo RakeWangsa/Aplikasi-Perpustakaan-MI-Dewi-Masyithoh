@@ -69,13 +69,6 @@ class DaftarController extends Controller
     public function editSiswa(Request $request, $id)
     {
         $id = base64_decode($id);
-        // $validatedData = $request->validate([
-        //     'nama' => 'required|max:255',
-        //     'email' => 'required|email:dns|unique:users,email,'.$id,
-        //     'nomor' => 'required|unique:users,nomor,'.$id,
-        //     'password' => 'nullable|min:5|max:255'
-        // ]);
-
         $siswa = DaftarSiswa::findOrFail($id);
 
         $siswa->nama = $request->nama;
@@ -83,6 +76,25 @@ class DaftarController extends Controller
 
         $siswa->save();
         return redirect('/daftarSiswa')->with('success', 'Data siswa berhasil diupdate!');
+        
+    }
+
+    public function hapusBuku($id)
+    {
+        $id = base64_decode($id);
+        DaftarBuku::where('id', $id)->delete();
+        return redirect('/daftarBuku')->with('success', 'Data buku berhasil dihapus!');
+    }
+
+    public function editBuku(Request $request, $id)
+    {
+        $id = base64_decode($id);
+        $buku = DaftarBuku::findOrFail($id);
+
+        $buku->nama = $request->nama;
+
+        $buku->save();
+        return redirect('/daftarBuku')->with('success', 'Data buku berhasil diupdate!');
         
     }
 }

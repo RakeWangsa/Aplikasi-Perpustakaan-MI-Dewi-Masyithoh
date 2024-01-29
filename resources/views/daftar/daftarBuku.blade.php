@@ -92,7 +92,6 @@
 
 
 <div class="row">
-   @if(isset($buku))
       <div class="card col-md-12 mt-2 pb-4">
          <div class="card-body">
              <h5 class="card-title"></h5>
@@ -115,9 +114,36 @@
                       <td>{{ $item->nama }}</td>
                       <td>
                         <a class="btn btn-info" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-book text-white"></i></a>
-                        <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
+                        <a class="btn btn-warning" style="border-radius: 100px;" data-bs-toggle="modal" data-bs-target="#editBuku{{ $item->id }}"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusBuku', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
                      </td>
+
+                      <!-- Modal -->
+ <div class="modal fade" id="editBuku{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Buku</h1>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <form method="POST" action="{{ route('editBuku', ['id' => base64_encode($item->id)]) }}" enctype="multipart/form-data">
+         @csrf
+      <div class="modal-body">
+
+            <div class="mb-3">
+               <label for="nama" class="form-label">Nama:</label>
+               <input type="text" class="form-control" id="nama" name="nama" value="{{ $item->nama }}" required>
+            </div>
+
+      </div>
+      <div class="modal-footer">
+         <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+   </form>
+     </div>
+   </div>
+ </div>
+
                    </tr>
                    @endforeach
                    @else
@@ -131,48 +157,6 @@
          </div>
       </div>
 
-      @else
-      <div class="card col-md-12 mt-2 pb-4">
-        <div class="card-body">
-            <h5 class="card-title">Daftar Siswa</h5>
-            <div class="table-container border">
-            <table>
-               <thead>
-                  <tr>
-                     <th scope="col">No</th>
-                     <th scope="col">NISN</th>
-                     <th scope="col">Nama</th>
-                     <th scope="col">Email</th>
-                     <th scope="col">Action</th>
-                     
-                  </tr>
-               </thead>
-               
-               <tbody>
-                 @php($no=1)
-                 @if(count($buku) > 0)
-                 @foreach($buku as $item)
-                  <tr>
-                     <td scope="row">{{ $no++ }}</td>
-                     <td>{{ $item->nomor }}</td>
-                     <td>{{ $item->name }}</td>
-                     <td>{{ $item->email }}</td>
-                     <td>
-                        <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
-                     </td>
-                  </tr>
-                  @endforeach
-                  @else
-                  <tr>
-                    <td colspan="6" class="text-center">Tidak ada user</td>
-                  </tr>
-                  @endif
-               </tbody>
-            </table>
-           </div>
-        </div>
-     </div>
-     @endif
+
 </div>
 @endsection

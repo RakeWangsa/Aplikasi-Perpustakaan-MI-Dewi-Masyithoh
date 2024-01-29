@@ -77,7 +77,8 @@ Route::group(['middleware' => ['auth', 'cekRole:admin']], function() {
     Route::post('/tambahBuku', [DaftarController::class, 'tambahBuku'])->name('tambahBuku')->middleware('auth');
     Route::get('/hapusSiswa/{id}', [DaftarController::class, 'hapusSiswa'])->name('hapusSiswa')->middleware('auth');
     Route::post('/editSiswa/{id}', [DaftarController::class, 'editSiswa'])->name('editSiswa')->middleware('auth');
-
+    Route::get('/hapusBuku/{id}', [DaftarController::class, 'hapusBuku'])->name('hapusBuku')->middleware('auth');
+    Route::post('/editBuku/{id}', [DaftarController::class, 'editBuku'])->name('editBuku')->middleware('auth');
 
 
     Route::get('/managementUser/guru', [ManagementController::class, 'managementUserGuru'])->name('managementUserGuru')->middleware('auth');
