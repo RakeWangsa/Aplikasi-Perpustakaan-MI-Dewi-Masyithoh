@@ -1,6 +1,27 @@
 @extends('layouts.main')
 
 @section('container')
+
+@if(session('existingPinjaman'))
+    <script>
+        alert('Buku sudah dipinjam oleh {{ session('peminjam') }}');
+    </script>
+@endif
+
+@if(session('tidakAdaPinjaman'))
+    <script>
+        alert('Anda tidak meminjam buku dengan nomor {{ session('nomor') }}');
+    </script>
+@endif
+
+@if(session('tidakAdaNomor'))
+    <script>
+        alert('Buku dengan nomor {{ session('nomor') }} tidak tersedia');
+    </script>
+@endif
+
+
+
 <div class="pagetitle mt-3">
    <div class="container">
       <div class="row align-items-center">

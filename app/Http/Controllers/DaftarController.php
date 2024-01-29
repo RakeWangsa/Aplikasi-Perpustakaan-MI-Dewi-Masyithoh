@@ -207,17 +207,47 @@ class DaftarController extends Controller
 
     public function tambahPinjaman(Request $request)
     {
-        Peminjaman::create([
-            'nisn' => $request->nisn,
-            'nomor_buku' => $request->nomor_buku,
-        ]);
+        // Cek apakah nomor_buku sudah ada dalam tabel Peminjaman
+        $existingPinjaman = Peminjaman::where('nomor_buku', $request->nomor_buku)->first();
+    
+        if ($existingPinjaman) {
+            // Jika sudah ada, redirect dan tampilkan alert
+            $peminjam = DB::table('daftar_siswa')
+            ->where('nisn',$existingPinjaman->nisn)
+            ->select('*')
+            ->first();
+            return redirect()->route('daftarSiswa')
+            ->with('existingPinjaman', true)
+            ->with('peminjam', $peminjam->nama);
+        }
 
-        // Redirect ke route daftarBuku
-        return redirect()->route('daftarSiswa');
+        $existingNomor = NomorBuku::where('nomor_buku', $request->nomor_buku)->first();
+        if ($existingNomor) {
+            // Jika belum ada, tambahkan record baru
+            Peminjaman::create([
+                'nisn' => $request->nisn,
+                'nomor_buku' => $request->nomor_buku,
+            ]);
+        
+            // Redirect ke route daftarSiswa
+            return redirect()->route('daftarSiswa')->with('success', 'Pinjaman berhasil ditambahkan');
+        }else{
+            return redirect()->route('daftarSiswa')
+            ->with('tidakAdaNomor', true)
+            ->with('nomor', $request->nomor_buku);
+        }
     }
+    
     public function pengembalian(Request $request)
     {
-        Peminjaman::where('nomor_buku', $request->nomor_buku)->delete();
-        return redirect('/daftarSiswa')->with('success', 'Buku berhasil dikembalikan!');
+        $existingPinjaman = Peminjaman::where('nomor_buku', $request->nomor_buku)->where('nisn', $request->nisn)->first();
+        if ($existingPinjaman) {
+            Peminjaman::where('nomor_buku', $request->nomor_buku)->delete();
+            return redirect('/daftarSiswa')->with('success', 'Buku berhasil dikembalikan!');
+        }else{
+            return redirect()->route('daftarSiswa')
+            ->with('tidakAdaPinjaman', true)
+            ->with('nomor', $request->nomor_buku);
+        }
     }
 }
