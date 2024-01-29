@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\DaftarBuku;
 use App\Models\DaftarSiswa;
+use App\Models\NomorBuku;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,11 +17,25 @@ class DaftarController extends Controller
         ->select('*')
         ->orderBy('nisn')
         ->get();
+        $peminjaman = DB::table('peminjaman')
+        ->select('*')
+        ->orderBy('nomor_buku')
+        ->get();
+        $nomorBuku = DB::table('nomor_buku')
+        ->select('*')
+        ->get();
+        $buku = DB::table('daftar_buku')
+        ->select('*')
+        ->get();
 
         return view('daftar.daftarSiswa', [
             'title' => 'Daftar Siswa',
             'active' => 'daftar siswa',
             'siswa' => $siswa,
+            'peminjaman' => $peminjaman,
+            'nomorBuku' => $nomorBuku,
+            'buku' => $buku
+
         ]);
     }
 
@@ -101,5 +117,27 @@ class DaftarController extends Controller
         $buku->save();
         return redirect('/daftarBuku')->with('success', 'Data buku berhasil diupdate!');
         
+    }
+
+    public function tambahJumlahBuku(Request $request)
+    {
+        NomorBuku::create([
+            'id_buku' => $request->id_buku,
+            'nomor_buku' => $request->nomor_buku,
+        ]);
+
+        // Redirect ke route daftarBuku
+        return redirect()->route('daftarBuku');
+    }
+
+    public function tambahPinjaman(Request $request)
+    {
+        Peminjaman::create([
+            'nisn' => $request->nisn,
+            'nomor_buku' => $request->nomor_buku,
+        ]);
+
+        // Redirect ke route daftarBuku
+        return redirect()->route('daftarSiswa');
     }
 }

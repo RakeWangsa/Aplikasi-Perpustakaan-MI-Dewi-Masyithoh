@@ -133,7 +133,7 @@
                                     <p><strong>Jumlah Buku: {{ $nomorBuku->where('id_buku', $item->id)->count() }}</strong></p>
                                  </div>
                                  <div class="col">
-                                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#tambahJumlah">
+                                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#tambahJumlah{{ $item->id }}">
                                        <i class="bi bi-plus-circle text-white"></i> Tambah
                                      </button>
                                  </div>
@@ -160,7 +160,7 @@
 
  
  <!-- Modal Tambah Jumlah Buku -->
- <div class="modal fade" id="tambahJumlah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="tambahJumlah{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
      <div class="modal-content">
        <div class="modal-header">
@@ -171,13 +171,17 @@
          @csrf
       <div class="modal-body">
 
+            <div class="mb-3" style="display:none">
+               <label for="nama_buku" class="form-label">ID Buku:</label>
+               <input type="text" class="form-control" name="id_buku" value="{{ $item->id }}" readonly>
+            </div>
             <div class="mb-3">
                <label for="nama_buku" class="form-label">Nama Buku:</label>
                <input type="text" class="form-control" value="{{ $item->nama }}" readonly>
             </div>
             <div class="mb-3">
-               <label for="nomor_buku" class="form-label">Nama Buku:</label>
-               <input type="text" class="form-control" id="nomor_buku" required>
+               <label for="nomor_buku" class="form-label">Nomor Buku:</label>
+               <input type="text" class="form-control" name="nomor_buku" id="nomor_buku" required>
             </div>
 
       </div>
