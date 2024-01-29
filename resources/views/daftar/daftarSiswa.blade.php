@@ -93,7 +93,6 @@
 
 
 <div class="row">
-   @if(isset($siswa))
       <div class="card col-md-12 mt-2 pb-4">
          <div class="card-body">
              <h5 class="card-title"></h5>
@@ -121,13 +120,13 @@
                       <td>
                         <a class="btn btn-info" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-book text-white"></i></a>
                         <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
+                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusSiswa', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
                      </td>
                    </tr>
                    @endforeach
                    @else
                    <tr>
-                     <td colspan="6" class="text-center">Tidak ada user</td>
+                     <td colspan="6" class="text-center">Tidak ada data</td>
                    </tr>
                    @endif
                 </tbody>
@@ -136,48 +135,6 @@
          </div>
       </div>
 
-      @else
-      <div class="card col-md-12 mt-2 pb-4">
-        <div class="card-body">
-            <h5 class="card-title">Daftar Siswa</h5>
-            <div class="table-container border">
-            <table>
-               <thead>
-                  <tr>
-                     <th scope="col">No</th>
-                     <th scope="col">NISN</th>
-                     <th scope="col">Nama</th>
-                     <th scope="col">Email</th>
-                     <th scope="col">Action</th>
-                     
-                  </tr>
-               </thead>
-               
-               <tbody>
-                 @php($no=1)
-                 @if(count($siswa) > 0)
-                 @foreach($siswa as $item)
-                  <tr>
-                     <td scope="row">{{ $no++ }}</td>
-                     <td>{{ $item->nomor }}</td>
-                     <td>{{ $item->name }}</td>
-                     <td>{{ $item->email }}</td>
-                     <td>
-                        <a class="btn btn-warning" style="border-radius: 100px;" a href="{{ route('editUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a class="btn btn-danger" style="border-radius: 100px;" onclick="return confirm('Apakah anda yakin?')" a href="{{ route('hapusUser', ['id' => base64_encode($item->id)]) }}"><i class="bi bi-trash"></i></a>
-                     </td>
-                  </tr>
-                  @endforeach
-                  @else
-                  <tr>
-                    <td colspan="6" class="text-center">Tidak ada user</td>
-                  </tr>
-                  @endif
-               </tbody>
-            </table>
-           </div>
-        </div>
-     </div>
-     @endif
+
 </div>
 @endsection

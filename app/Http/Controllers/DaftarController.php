@@ -58,4 +58,11 @@ class DaftarController extends Controller
         // Redirect ke route daftarBuku
         return redirect()->route('daftarSiswa');
     }
+
+    public function hapusSiswa($id)
+    {
+        $id = base64_decode($id);
+        DaftarSiswa::where('id', $id)->delete();
+        return redirect('/daftarSiswa')->with('success', 'Data siswa berhasil dihapus!');
+    }
 }
